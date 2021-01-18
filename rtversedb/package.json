@@ -1,0 +1,15 @@
+{
+  "name": "rtversedb",
+  "version": "1.0.0",
+  "description": "A simple IoT Platform  - DB module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github/darcdev/rtverse"
+  },
+  "author": "Diego Andres Cabrera",
+  "license": "MIT"
+}
