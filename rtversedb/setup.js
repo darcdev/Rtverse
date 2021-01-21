@@ -3,23 +3,26 @@
 const debug = require("debug")("rtverse:db:setup");
 const inquirer = require("inquirer");
 const chalk = require("chalk");
+const argv = require("yargs").boolean(["y", "yes"]).argv;
+
 const db = require("./");
 
 const prompt = inquirer.createPromptModule();
 
 async function setup() {
-  const answer = await prompt([
-    {
-      type: "confirm",
-      name: "setup",
-      message: "This will destroy your database , are you sure?",
-    },
-  ]);
+  if (!(argv.y || argv.yes)) {
+    const answer = await prompt([
+      {
+        type: "confirm",
+        name: "setup",
+        message: "This will destroy your database , are you sure?",
+      },
+    ]);
 
-  if (!answer.setup) {
-    return console.log("Nothing happened :)");
+    if (!answer.setup) {
+      return console.log("Nothing happened :)");
+    }
   }
-
   const config = {
     database: process.env.DB_NAME || "rtverse",
     username: process.env.DB_USER || "darcdev",
