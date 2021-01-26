@@ -20,7 +20,6 @@ module.exports = async function (config) {
       raw: true,
     },
   });
-
   // sequelize instance
   const sequelize = setupDatabase(config);
 

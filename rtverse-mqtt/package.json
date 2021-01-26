@@ -18,6 +18,7 @@
     "debug": "^4.3.1",
     "jsonschema": "^1.2.6",
     "mosca": "^2.5.2",
-    "redis": "^2.8.0"
+    "redis": "^2.8.0",
+    "rtverse-db": "file:../rtverse-db/"
   }
 }
