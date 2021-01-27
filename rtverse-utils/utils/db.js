@@ -1,4 +1,4 @@
-const debug = require("debug")("rtverse:db:setup");
+const debug = require("debug")("rtverse:utils:setupDB");
 
 module.exports = function setConfigDB(extraConfig) {
   const config = {

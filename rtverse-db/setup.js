@@ -3,7 +3,7 @@
 const inquirer = require("inquirer");
 const chalk = require("chalk");
 const argv = require("yargs").boolean(["y", "yes"]).argv;
-const setupConfigDB = require("./config/db");
+const { setConfigDB } = require("rtverse-utils");
 const db = require("./");
 
 const prompt = inquirer.createPromptModule();
@@ -23,7 +23,7 @@ async function setup() {
     }
   }
 
-  let config = setupConfigDB({ setup: true });
+  let config = setConfigDB({ setup: true });
   await db(config).catch(handleFatalError);
 
   console.log("Success!");

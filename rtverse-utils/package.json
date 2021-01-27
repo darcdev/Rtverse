@@ -1,0 +1,14 @@
+{
+  "name": "rtverse-utils",
+  "version": "1.0.0",
+  "description": "A IoT Platform - Utils",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "debug": "^4.3.1"
+  }
+}

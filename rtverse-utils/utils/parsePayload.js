@@ -14,6 +14,4 @@ function parsePayload(payload) {
   return payload;
 }
 
-module.exports = {
-  parsePayload,
-};
+module.exports = parsePayload;

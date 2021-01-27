@@ -20,7 +20,8 @@
     "pg": "^8.5.1",
     "pg-hstore": "^2.3.3",
     "sequelize": "^6.3.5",
-    "sqlite3": "^5.0.0"
+    "sqlite3": "^5.0.0",
+    "rtverse-utils": "file:../rtverse-utils"
   },
   "devDependencies": {
     "ava": "^3.15.0",

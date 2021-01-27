@@ -5,8 +5,7 @@ const mosca = require("mosca");
 const redis = require("redis");
 const chalk = require("chalk");
 const db = require("rtverse-db");
-const setupConfigDB = require("rtverse-db/config/db");
-const { parsePayload } = require("./utils");
+const { setConfigDB } = require("rtverse-utils");
 
 const backend = {
   type: "redis",
@@ -115,7 +114,7 @@ server.on("published", async (packet, client) => {
 });
 
 server.on("ready", async () => {
-  let config = setupConfigDB();
+  let config = setConfigDB();
   const services = await db(config).catch(handleFatalError);
 
   Agent = services.Agent;
