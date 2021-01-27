@@ -1,0 +1,22 @@
+{
+  "name": "rtverse-api",
+  "version": "1.0.0",
+  "description": "A Simple IoT Platform - API",
+  "main": "server.js",
+  "private": "true",
+  "scripts": {
+    "start": "NODE_ENV=production node server.js",
+    "start-dev": "DEBUG=rtverse:* nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Diego Andres Cabrera Rojas",
+  "license": "MIT",
+  "devDependencies": {
+    "chalk": "^4.1.0",
+    "nodemon": "^2.0.7"
+  },
+  "dependencies": {
+    "debug": "^4.3.1",
+    "express": "^4.17.1"
+  }
+}
