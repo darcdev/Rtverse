@@ -10,6 +10,7 @@ const server = http.createServer(app);
 const port = process.env.PORT || 3000;
 
 app.use("/api", api);
+
 app.use((err, req, res, next) => {
   debug(`Error: ${err.message}`);
   if (err.message.match(/not found/)) {
@@ -21,11 +22,6 @@ app.use((err, req, res, next) => {
     error: err.message,
   });
 });
-server.listen(port, () => {
-  console.log(
-    `${chalk.green("[rtverse-api]")} server is listening on port ${port}`
-  );
-});
 
 function handleFatalError(err) {
   console.error(`${chalk.red("[fatal error]")} ${err.message}`);
@@ -33,5 +29,14 @@ function handleFatalError(err) {
   process.exit(1);
 }
 
-process.on("uncaughtException", handleFatalError);
-process.on("unhandledRejection", handleFatalError);
+if (!module.main) {
+  process.on("uncaughtException", handleFatalError);
+  process.on("unhandledRejection", handleFatalError);
+  server.listen(port, () => {
+    console.log(
+      `${chalk.green("[rtverse-api]")} server is listening on port ${port}`
+    );
+  });
+}
+
+module.exports = server;

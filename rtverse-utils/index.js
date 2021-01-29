@@ -1,4 +1,4 @@
-import setConfigDB from "./utils/db";
-import parsePayload from "./utils/parsePayload";
+const setConfigDB = require("./utils/db");
+const parsePayload = require("./utils/parsePayload");
 
-export { setConfigDB, parsePayload };
+module.exports = { setConfigDB, parsePayload };
