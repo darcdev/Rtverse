@@ -5,7 +5,10 @@ const express = require("express");
 const api = express.Router();
 const db = require("rtverse-db");
 const { setConfigDB } = require("rtverse-utils");
+const auth = require("express-jwt");
+const guard = require("express-jwt-permissions")();
 
+const config = require("./config");
 let services, Agent, Metric;
 
 api.use("*", async (req, res, next) => {
@@ -21,10 +24,20 @@ api.use("*", async (req, res, next) => {
   next();
 });
 
-api.get("/agents", async (req, res, next) => {
+api.get("/agents", auth(config.auth), async (req, res, next) => {
+  const { user } = req;
+
+  if (!user || !user.username) {
+    return next(new Error("Not authorized"));
+  }
+
   let agents = [];
   try {
-    agents = await Agent.findConnected();
+    if (user.admin) {
+      agents = await Agent.findConnected();
+    } else {
+      agent = await Agent.findByUsername(user.username);
+    }
   } catch (err) {
     return next(err);
   }
@@ -49,24 +62,29 @@ api.get("/agent/:uuid", async (req, res, next) => {
   res.status(200).send(agent);
 });
 
-api.get("/metrics/:uuid", async (req, res, next) => {
-  const { uuid } = req.params;
+api.get(
+  "/metrics/:uuid",
+  auth(config.auth),
+  guard.check(["metrics:read"]),
+  async (req, res, next) => {
+    const { uuid } = req.params;
 
-  debug(`request to /metrics/${uuid}`);
+    debug(`request to /metrics/${uuid}`);
 
-  let metrics = [];
+    let metrics = [];
 
-  try {
-    metrics = await Metric.findByAgentUuid(uuid);
-  } catch (err) {
-    return next(err);
+    try {
+      metrics = await Metric.findByAgentUuid(uuid);
+    } catch (err) {
+      return next(err);
+    }
+
+    if (!metrics || metrics.length === 0) {
+      return next(new Error(`Metrics not found for agent with uuid ${uuid}`));
+    }
+    res.status(200).send(metrics);
   }
-
-  if (!metrics || metrics.length === 0) {
-    return next(new Error(`Metrics not found for agent with uuid ${uuid}`));
-  }
-  res.status(200).send(metrics);
-});
+);
 
 api.get("/metric/:uuid:/:type", async (req, res) => {
   const { uuid, type } = req.params;
