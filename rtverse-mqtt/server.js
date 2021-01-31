@@ -5,8 +5,7 @@ const mosca = require("mosca");
 const redis = require("redis");
 const chalk = require("chalk");
 const db = require("rtverse-db");
-const { setConfigDB } = require("rtverse-utils");
-
+const { setConfigDB, parsePayload } = require("rtverse-utils");
 const backend = {
   type: "redis",
   redis,
@@ -25,7 +24,6 @@ let Agent, Metric;
 server.on("clientConnected", (client) => {
   debug(`Client connected : ${client.id}`);
   clients.set(client.id, null);
-  console.log(clients);
 });
 
 server.on("ClientDisconnected", async (client) => {

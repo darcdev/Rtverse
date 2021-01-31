@@ -68,22 +68,20 @@ class RtverseAgent extends EventEmitter {
               metrics: [],
               timestamp: new Date().getTime(),
             };
-          }
 
-          for (let [metric, fn] of this._metrics) {
-            if (fn.length == 1) {
-              fn = util.promisify(fn);
+            for (let [metric, fn] of this._metrics) {
+              if (fn.length == 1) {
+                fn = util.promisify(fn);
+              }
+              message.metrics.push({
+                type: metric,
+                value: await Promise.resolve(fn()),
+              });
             }
-            message.metrics.push({
-              type: metric,
-              value: await Promise.resolve(fn()),
-            });
+            debug(`Sending`, message);
+            this._client.publish("agent/message", JSON.stringify(message));
+            this.emit("message", message);
           }
-
-          debug(`Sending`, message);
-
-          this._client.publish("agent/message", JSON.stringify(message));
-          this.emit("message", message);
         }, opts.interval);
       });
 
@@ -120,42 +118,5 @@ class RtverseAgent extends EventEmitter {
     }
   }
 }
-
-const agent = new RtverseAgent({
-  name: "myapp",
-  username: "admin",
-  interval: 2000,
-});
-
-agent.addMetric("rss", function getRss() {
-  return process.memoryUsage().rss;
-});
-
-agent.addMetric("promiseMetric", function getRandomPromise() {
-  return Promise.resolve(Math.random());
-});
-
-agent.addMetric("callbackMetric", function getRandomCallbakc(callback) {
-  setTimeout(() => {
-    callback(null, Math.random());
-  }, 1000);
-});
-
-const handler = () => {
-  console.log("handler");
-};
-
-agent.on("connected", handler);
-agent.on("disconnected", handler);
-agent.on("message", handler);
-
-agent.on("agent/connected", handler);
-agent.on("agent/disconnected", handler);
-agent.on("agent/message", (payload) => {
-  console.log(payload);
-});
-
-agent.connect();
-agent.disconnect();
 
 module.exports = RtverseAgent;
