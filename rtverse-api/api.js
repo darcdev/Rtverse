@@ -34,16 +34,14 @@ api.get("/agents", auth(config.auth), async (req, res, next) => {
   let agents = [];
   try {
     if (user.admin) {
-      agents = await Agent.findConnected();
+      agents = await Agent.findAll();
     } else {
       agent = await Agent.findByUsername(user.username);
     }
   } catch (err) {
     return next(err);
   }
-  console.log(agents);
   res.status(200).send(agents);
-  res.end();
 });
 api.get("/agent/:uuid", async (req, res, next) => {
   const { uuid } = req.params;
@@ -86,7 +84,7 @@ api.get(
   }
 );
 
-api.get("/metric/:uuid:/:type", async (req, res) => {
+api.get("/metrics/:uuid/:type", async (req, res, next) => {
   const { uuid, type } = req.params;
 
   debug(`request to /metrics/${uuid}/${type}`);
@@ -99,9 +97,9 @@ api.get("/metric/:uuid:/:type", async (req, res) => {
     return next(error);
   }
   if (!metrics || metrics.length === 0) {
-    return next(new Error(`Metrics not found for agent with uuid ${uuid}`));
+    next(new Error(`Metrics not found for agent with uuid ${uuid}`));
   }
-  res.send(metrics);
+  res.status(200).send(metrics);
 });
 
 module.exports = api;

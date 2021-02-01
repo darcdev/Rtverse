@@ -26,7 +26,7 @@ server.on("clientConnected", (client) => {
   clients.set(client.id, null);
 });
 
-server.on("ClientDisconnected", async (client) => {
+server.on("clientDisconnected", async (client) => {
   debug(`Client disconnected : ${client.id}`);
   const agent = clients.get(client.id);
 

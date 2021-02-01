@@ -1,13 +1,12 @@
 "use strict";
-
 module.exports = function setupMetric(MetricModel, AgentModel) {
   async function create(uuid, metric) {
     const agent = await AgentModel.findOne({
       where: { uuid },
     });
-
+    console.log(agent);
     if (agent) {
-      Object.assign(MetricModel, { agentId: agent.id });
+      Object.assign(metric, { agentId: agent.id });
       const result = await MetricModel.create(metric);
       return result.toJSON();
     }

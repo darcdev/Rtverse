@@ -4,22 +4,43 @@
   "description": "A Simple IoT Platform - Web Dashboard",
   "main": "index.js",
   "scripts": {
+    "prestart": "npm run build",
+    "prestart-dev": "npm run build",
+    "build": "NODE_ENV=development parcel build ./client/app.js --out-dir ./public",
     "start": "NODE_ENV=production node server.js",
     "start-dev": "DEBUG=rtverse:* nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "MIT",
+  "alias": {
+    "vue": "./node_modules/vue/dist/vue.common.js"
+  },
   "devDependencies": {
-    "nodemon": "^2.0.7"
+    "@vue/component-compiler-utils": "^3.2.0",
+    "nodemon": "^2.0.7",
+    "vue-template-compiler": "^2.6.12"
   },
   "dependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/plugin-transform-runtime": "^7.12.10",
+    "@babel/runtime": "^7.12.5",
+    "@vue/babel-helper-vue-jsx-merge-props": "^1.2.1",
+    "@vue/babel-preset-jsx": "^1.2.4",
     "axios": "^0.21.1",
     "chalk": "^4.1.0",
+    "chart.js": "^2.9.4",
     "debug": "^4.3.1",
     "express": "^4.17.1",
+    "moment": "^2.29.1",
+    "parcel-bundler": "^1.12.4",
+    "parcel-plugin-clean-dist": "0.0.6",
+    "random-material-color": "^1.0.5",
     "rtverse-agent": "file:../rtverse-agent",
     "rtverse-utils": "file:../rtverse-utils",
-    "socket.io": "^3.1.0"
+    "socket.io": "^3.1.0",
+    "socket.io-client": "^3.1.0",
+    "vue": "^2.6.12",
+    "vue-chartjs": "^2.8.1"
   }
 }

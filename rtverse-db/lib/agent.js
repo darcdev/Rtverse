@@ -32,7 +32,9 @@ module.exports = function setupAgent(AgentModel) {
   }
 
   function findAll() {
-    return AgentModel.findAll();
+    return AgentModel.findAll({
+      order: [["createdAt", "DESC"]],
+    });
   }
 
   function findConnected() {

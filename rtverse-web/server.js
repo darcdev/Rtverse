@@ -18,11 +18,11 @@ const proxy = require("./proxy");
 // Socket.io - Web sockets
 io.on("connect", (socket) => {
   debug(`Connected ${socket.id}`);
-  console.log(typeof pipe);
   pipe(agent, socket);
 });
 
 app.use(express.static(path.join(__dirname, "public")));
+app.use(express.json({ extended: true }));
 
 app.use("/", proxy);
 function handleFatalError(err) {
