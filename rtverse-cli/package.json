@@ -1,0 +1,19 @@
+{
+  "name": "rtverse-cli",
+  "version": "1.0.0",
+  "description": "A Simple IoT Platform - CLI",
+  "private": true,
+  "bin": "rtverse.js",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "blessed": "^0.1.81",
+    "blessed-contrib": "^4.8.21",
+    "minimist": "^1.2.5",
+    "rtverse-agent": "file:../rtverse-agent"
+  }
+}
