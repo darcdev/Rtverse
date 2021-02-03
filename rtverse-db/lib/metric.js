@@ -4,7 +4,6 @@ module.exports = function setupMetric(MetricModel, AgentModel) {
     const agent = await AgentModel.findOne({
       where: { uuid },
     });
-    console.log(agent);
     if (agent) {
       Object.assign(metric, { agentId: agent.id });
       const result = await MetricModel.create(metric);
