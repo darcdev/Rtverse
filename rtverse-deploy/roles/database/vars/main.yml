@@ -1,0 +1,12 @@
+postgresql_databases:
+  - name: rtverse
+    owner: darcdev
+    hstore: yes
+postgresql_users:
+  - name: darcdev
+    pass: darcdev
+    encrypted: no
+postgresql_user_privileges:
+  - name: darcdev
+    db: rtverse
+    priv: "ALL"
