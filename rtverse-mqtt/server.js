@@ -6,11 +6,13 @@ const redis = require("redis");
 const chalk = require("chalk");
 const db = require("rtverse-db");
 const { setConfigDB, parsePayload } = require("rtverse-utils");
+
 const backend = {
   type: "redis",
   redis,
   return_buffers: true,
 };
+
 const settings = {
   port: 1883,
   backend,

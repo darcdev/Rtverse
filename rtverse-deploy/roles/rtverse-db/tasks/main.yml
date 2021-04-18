@@ -1,0 +1,14 @@
+---
+- name: Copy rtverse-db
+  copy: src=rtverse-db
+    dest=/usr/local/src
+    mode=u=rwx,g=rwx,o=rx
+
+- name: Run npm install
+  command: npm install
+    chdir=/usr/local/src/rtverse-db
+    creates=/usr/local/src/rtverse-db/node_modules
+
+- name: Setup Database
+  comand: npm run setup -- --yes
+    chdir=/usr/local/src/rtverse-db
